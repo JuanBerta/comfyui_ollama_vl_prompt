@@ -102,7 +102,7 @@ ollama list
 
    ```sh
    cd ComfyUI/custom_nodes
-   git clone https://github.com/JuanBerta/ollama_vl_prompt.git
+   git clone https://github.com/JuanBerta/comfyui_ollama_vl_prompt.git
    ```
 
 2. Restart ComfyUI
@@ -180,7 +180,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 Juan – GitHub: [https://github.com/JuanBerta](https://github.com/JuanBerta)
 
-Project Link: [https://github.com/JuanBerta/ollama_vl_prompt](https://github.com/JuanBerta/ollama_vl_prompt)
+Project Link: [https://github.com/JuanBerta/comfyui_ollama_vl_prompt](https://github.com/JuanBerta/comfyui_ollama_vl_prompt)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
