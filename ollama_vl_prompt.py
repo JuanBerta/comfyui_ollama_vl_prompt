@@ -59,7 +59,8 @@ PRESETS = {
         Based on the image, utilize the elements present to generate a prompt.\n
         Take in account materials, lighting, and style.\n
         Do NOT mention cameras, photos, or photographers.\n 
-        Output a single concise prompt.\n"""
+        Output a single concise prompt.\n
+        "If multiple images are provided, treat them as contextual references.\n"""
     ),
 }
 
