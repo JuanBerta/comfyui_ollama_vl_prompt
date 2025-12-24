@@ -29,7 +29,7 @@ Documentation = "https://github.com/JuanBerta/comfyui_ollama_vl_prompt/wiki"
 "Bug Tracker" = "https://github.com/JuanBerta/comfyui_ollama_vl_prompt/issues"
 
 [tool.comfy]
-PublisherId = ""
+PublisherId = "beinded"
 DisplayName = "comfyui_ollama_vl_prompt"
 Icon = ""
 includes = [] 
