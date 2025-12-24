@@ -108,6 +108,7 @@ ollama list
 2. Install requirements
 
    ```sh
+   cd comfyui_ollama_vl_prompt
    pip install -r requirements.txt
    ```
 
