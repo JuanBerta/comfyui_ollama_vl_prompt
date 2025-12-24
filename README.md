@@ -105,9 +105,15 @@ ollama list
    git clone https://github.com/JuanBerta/comfyui_ollama_vl_prompt.git
    ```
 
-2. Restart ComfyUI
+2. Install requirements
 
-3. Ensure Ollama is running before executing a workflow
+   ```sh
+   pip install -r requirements.txt
+   ```
+
+3. Restart ComfyUI
+
+4. Ensure Ollama is running before executing a workflow
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
