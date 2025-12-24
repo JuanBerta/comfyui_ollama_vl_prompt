@@ -121,7 +121,7 @@ ollama list
 
 ## Usage
 
-1. Add the **Ollama VL Prompt Generator** node to your workflow
+1. Add the **Ollama VL → Prompt** node to your workflow
 2. Connect:
 
    * An **IMAGE** input
