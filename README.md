@@ -147,7 +147,7 @@ ollama list
 * [x] Preset-based system prompts
 * [ ] Custom user-defined presets via JSON
 * [ ] Streaming token output
-* [ ] Multi-image input support
+* [x] Multi-image input support
 * [ ] Advanced error handling & model validation
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
