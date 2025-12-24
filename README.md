@@ -2,22 +2,10 @@
 
 <a id="readme-top"></a>
 
-<!-- PROJECT SHIELDS -->
-
-[![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![License][license-shield]][license-url]
-
 <!-- PROJECT LOGO -->
 
 <br />
 <div align="center">
-  <a href="https://github.com/JuanBerta/ollama_vl_prompt">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
-
   <h3 align="center">ComfyUI Ollama VL Prompt Generator</h3>
 
   <p align="center">
@@ -64,8 +52,6 @@
 <!-- ABOUT THE PROJECT -->
 
 ## About The Project
-
-[![Product Name Screen Shot][product-screenshot]](images/screenshot.png)
 
 This project provides a **ComfyUI custom node** that connects to **Ollama** and lets the user choose *any* local vision-language (VL) model to generate or refine prompts based on:
 
@@ -207,17 +193,3 @@ Project Link: [https://github.com/JuanBerta/ollama_vl_prompt](https://github.com
 * Open-source VL model authors
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- MARKDOWN LINKS & IMAGES -->
-
-[contributors-shield]: https://github.com/JuanBerta/ollama_vl_prompt.svg?style=for-the-badge
-[contributors-url]: https://github.com/JuanBerta/ollama_vl_prompt/graphs/contributors
-[forks-shield]: https://github.com/JuanBerta/ollama_vl_prompt.svg?style=for-the-badge
-[forks-url]: https://github.com/JuanBerta/ollama_vl_prompt/network/members
-[stars-shield]: https://img.shields.io/github/stars/your_username/ComfyUI-Ollama-VL-Prompt-Generator.svg?style=for-the-badge
-[stars-url]: https://github.com/JuanBerta/ollama_vl_prompt/stargazers
-[issues-shield]: https://img.shields.io/github/issues/your_username/ComfyUI-Ollama-VL-Prompt-Generator.svg?style=for-the-badge
-[issues-url]: https://github.com/JuanBerta/ollama_vl_prompt/issues
-[license-shield]: https://img.shields.io/github/license/your_username/ComfyUI-Ollama-VL-Prompt-Generator.svg?style=for-the-badge
-[license-url]: https://github.com/JuanBerta/ollama_vl_prompt/blob/main/LICENSE
-[product-screenshot]: images/screenshot.png
