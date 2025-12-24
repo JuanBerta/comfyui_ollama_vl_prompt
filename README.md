@@ -14,7 +14,7 @@
 
 <br />
 <div align="center">
-  <a href="https://github.com/your_username/ComfyUI-Ollama-VL-Prompt-Generator">
+  <a href="https://github.com/JuanBerta/ollama_vl_prompt">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
@@ -116,7 +116,7 @@ ollama list
 
    ```sh
    cd ComfyUI/custom_nodes
-   git clone https://github.com/your_username/ComfyUI-Ollama-VL-Prompt-Generator.git
+   git clone https://github.com/JuanBerta/ollama_vl_prompt.git
    ```
 
 2. Restart ComfyUI
@@ -192,9 +192,9 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
-Juan – GitHub: [https://github.com/your_username](https://github.com/your_username)
+Juan – GitHub: [https://github.com/JuanBerta](https://github.com/JuanBerta)
 
-Project Link: [https://github.com/your_username/ComfyUI-Ollama-VL-Prompt-Generator](https://github.com/your_username/ComfyUI-Ollama-VL-Prompt-Generator)
+Project Link: [https://github.com/JuanBerta/ollama_vl_prompt](https://github.com/JuanBerta/ollama_vl_prompt)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -210,14 +210,14 @@ Project Link: [https://github.com/your_username/ComfyUI-Ollama-VL-Prompt-Generat
 
 <!-- MARKDOWN LINKS & IMAGES -->
 
-[contributors-shield]: https://img.shields.io/github/contributors/your_username/ComfyUI-Ollama-VL-Prompt-Generator.svg?style=for-the-badge
-[contributors-url]: https://github.com/your_username/ComfyUI-Ollama-VL-Prompt-Generator/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/your_username/ComfyUI-Ollama-VL-Prompt-Generator.svg?style=for-the-badge
-[forks-url]: https://github.com/your_username/ComfyUI-Ollama-VL-Prompt-Generator/network/members
+[contributors-shield]: https://github.com/JuanBerta/ollama_vl_prompt.svg?style=for-the-badge
+[contributors-url]: https://github.com/JuanBerta/ollama_vl_prompt/graphs/contributors
+[forks-shield]: https://github.com/JuanBerta/ollama_vl_prompt.svg?style=for-the-badge
+[forks-url]: https://github.com/JuanBerta/ollama_vl_prompt/network/members
 [stars-shield]: https://img.shields.io/github/stars/your_username/ComfyUI-Ollama-VL-Prompt-Generator.svg?style=for-the-badge
-[stars-url]: https://github.com/your_username/ComfyUI-Ollama-VL-Prompt-Generator/stargazers
+[stars-url]: https://github.com/JuanBerta/ollama_vl_prompt/stargazers
 [issues-shield]: https://img.shields.io/github/issues/your_username/ComfyUI-Ollama-VL-Prompt-Generator.svg?style=for-the-badge
-[issues-url]: https://github.com/your_username/ComfyUI-Ollama-VL-Prompt-Generator/issues
+[issues-url]: https://github.com/JuanBerta/ollama_vl_prompt/issues
 [license-shield]: https://img.shields.io/github/license/your_username/ComfyUI-Ollama-VL-Prompt-Generator.svg?style=for-the-badge
-[license-url]: https://github.com/your_username/ComfyUI-Ollama-VL-Prompt-Generator/blob/main/LICENSE
+[license-url]: https://github.com/JuanBerta/ollama_vl_prompt/blob/main/LICENSE
 [product-screenshot]: images/screenshot.png
