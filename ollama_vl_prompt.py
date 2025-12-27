@@ -1,82 +1,38 @@
+import os
+import json
 from .utils import tensor_to_base64_list, get_local_models
 from ollama import chat
 
-PRESETS = {
-    "SDXL": (
-        """You are generating a Stable Diffusion XL image creation prompt.\n
-        Describe the image clearly, focusing on subject, clothing, colors.\n
-        materials, lighting, and style.\n
-        Do NOT mention cameras, photos, or photographers.\n
-        Output a single concise prompt.\n
-        If multiple images are provided, treat them as contextual references.\n"""
-    ),
+# Get the route of the JSON file in the same folder than the script
+RESOURCES_PATH = os.path.dirname(os.path.realpath(__file__))
+PRESETS_FILE = os.path.join(RESOURCES_PATH, "presets.json")
 
-    "Inpainting (Preserve Context)": (
-        """Describe the image for Stable Diffusion inpainting.\n
-        Focus on what should remain unchanged and the surrounding context.\n
-        Avoid global changes unless necessary.\n
-        If multiple images are provided, treat them as contextual references.\n"""
-    ),
-
-    "Anime / Illustration": (
-        """Describe the image as an anime-style illustration prompt.\n
-        Include art style, line quality, color palette, and mood.\n
-        Do not mention real-world photography terms.\n
-        Output a single concise prompt.\n
-        If multiple images are provided, treat them as contextual references.\n"""
-    ),
-
-    "Caption (Neutral)": (
-        """Describe the image accurately and neutrally.\n
-        Describe the elements in the image.\n
-        Output a single concise prompt.\n
-        If multiple images are provided, treat them as contextual references.\n"""
-    ),
-
-    "Qwen Image Edit 2511": (
-        """You are generating a Qwen Image Edit 2511 image editing prompt.\n
-        Describe the image clearly, focusing on subject, clothing, colors\n
-        materials, lighting, and style.\n
-        Do NOT mention cameras, photos, or photographers.\n
-        Output a single concise prompt.\n
-        Example prompt: Change her hair to white.\n
-        "If multiple images are provided, treat them as contextual references.\n"""
-        
-    ),
-
-    "NSFW": (
-        """You are generating NSFW Image prompt.\n
-        Based on the image, utilize the elements present to generate a prompt.\n
-        Take in account materials, lighting, and style.\n
-        Do NOT mention cameras, photos, or photographers.\n
-        Output a single concise prompt.\n
-        If multiple images are provided, treat them as contextual references.\n"""
-    ),
-
-    "SFW": (
-        """You are generating SFW Image prompt.\n
-        In no case write NSFW/Questionable/Explicit elements in the prompt.\n
-        Based on the image, utilize the elements present to generate a prompt.\n
-        Take in account materials, lighting, and style.\n
-        Do NOT mention cameras, photos, or photographers.\n 
-        Output a single concise prompt.\n
-        "If multiple images are provided, treat them as contextual references.\n"""
-    ),
-}
+def load_presets():
+    if os.path.exists(PRESETS_FILE):
+        try:
+            with open(PRESETS_FILE, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except Exception as e:
+            print(f"Error loading presets.json: {e}")
+    # Fallback in case that the file doesn't exists or is corrupt
+    return {"Default": "Describe this image."}
 
 class OllamaVLPredictPrompt:
     @classmethod
     def INPUT_TYPES(cls):
+        # We load the presets here so they are updated when Comfyui is updated
+        presets = load_presets()
         return {
             "required": {
                 "image1": ("IMAGE",),
-                "preset": (list(PRESETS.keys()),),
+                "preset": (list(presets.keys()),), # Dynamic from the JSOn
                 "user_hint": ("STRING", {
                     "multiline": True,
                     "default": ""
                 }),
-                "model": (get_local_models(),),
-                "keep_alive": ("FLOAT",),
+                "model": (get_local_models(),), #
+                "keep_alive": ("FLOAT", {"default": 5.0}),
+                "combine_all_images": (["True", "False"], {"default": "False"}),
             },
             "optional": {
                 "image2": ("IMAGE",),
@@ -84,57 +40,48 @@ class OllamaVLPredictPrompt:
             }
         }
 
-
     RETURN_TYPES = ("STRING",)
     RETURN_NAMES = ("generated_prompt",)
     OUTPUT_IS_LIST = (True,)
     FUNCTION = "run"
-    CATEGORY = "prompt/ollama"
+    CATEGORY = "prompt/ollama" # 
 
-    def run(
-    self,
-    image1,
-    preset,
-    user_hint,
-    model,
-    keep_alive,
-    image2=None,
-    image3=None,
-    ):
+    def run(self, image1, preset, user_hint, model, keep_alive, combine_all_images, image2=None, image3=None):
+        # Reload the prests for obtain the text from the selected
+        presets = load_presets()
+        prompt_base = presets.get(preset, "Describe this image.")
+
         images_b64 = []
+        for img in [image1, image2, image3]:
+            if img is not None:
+                images_b64.extend(tensor_to_base64_list(img)) #
 
-        if image1 is not None:
-            images_b64.extend(tensor_to_base64_list(image1))
-
-        if image2 is not None:
-            images_b64.extend(tensor_to_base64_list(image2))
-
-        if image3 is not None:
-            images_b64.extend(tensor_to_base64_list(image3))
-
-        prompt_base = PRESETS[preset]
         if user_hint.strip():
             prompt_base += "\nAdditional instruction: " + user_hint.strip()
 
         results = []
-
-        for img_b64 in images_b64:
+        
+        # Delivery logic (Combined or Individual)
+        if combine_all_images == "True":
             try:
                 response = chat(
                     model=model,
-                    messages=[
-                        {
-                            "role": "user",
-                            "content": prompt_base,
-                            "images": [img_b64],
-                        }
-                    ],
+                    messages=[{"role": "user", "content": prompt_base, "images": images_b64}],
                     keep_alive=keep_alive,
                 )
-                text = response.message.content
+                results.append(response.message.content.replace("\n", ", ").strip())
             except Exception as e:
-                text = f"Ollama error: {str(e)}"
-
-            results.append(text.replace("\n", ", ").strip())
+                results.append(f"Ollama error: {str(e)}")
+        else:
+            for img_b64 in images_b64:
+                try:
+                    response = chat(
+                        model=model,
+                        messages=[{"role": "user", "content": prompt_base, "images": [img_b64]}],
+                        keep_alive=keep_alive,
+                    )
+                    results.append(response.message.content.replace("\n", ", ").strip())
+                except Exception as e:
+                    results.append(f"Ollama error: {str(e)}")
 
         return (results,)

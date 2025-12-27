@@ -21,16 +21,19 @@ def get_local_models():
 
 def tensor_to_base64_list(image_tensor):
     """
-    Converts a batched ComfyUI IMAGE tensor into a list of base64 PNG images.
+    Convierte un tensor de ComfyUI en una lista de imágenes base64 en formato RGB.
     """
     images_b64 = []
 
     for i in range(image_tensor.shape[0]):
         image = image_tensor[i]
         image = image.cpu().numpy()
+        # Scale and convert to uint8
         image = (image * 255).clip(0, 255).astype(np.uint8)
 
-        pil = Image.fromarray(image)
+        # Forze RGB conversion to avoid errores with alpha channels (RGBA)
+        pil = Image.fromarray(image).convert("RGB") 
+        
         buffer = BytesIO()
         pil.save(buffer, format="PNG")
 
