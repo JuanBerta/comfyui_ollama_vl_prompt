@@ -1,202 +1,90 @@
-<!-- Improved compatibility of back to top link -->
-
 <a id="readme-top"></a>
-
-<!-- PROJECT LOGO -->
 
 <br />
 <div align="center">
   <h3 align="center">ComfyUI Ollama VL Prompt Generator</h3>
-
   <p align="center">
-    A custom ComfyUI node that uses Ollama vision-language models to generate or refine prompts from an input image and text.
-    <br />
-    <a href="#usage"><strong>Explore the usage »</strong></a>
+    A custom ComfyUI node that uses Ollama vision-language models to generate or refine prompts from multiple input images and text.
     <br />
     <br />
-    <a href="#">View Demo</a>
+    <a href="https://github.com/JuanBerta/comfyui_ollama_vl_prompt/issues">Report Bug</a>
     &middot;
-    <a href="#">Report Bug</a>
-    &middot;
-    <a href="#">Request Feature</a>
+    <a href="https://github.com/JuanBerta/comfyui_ollama_vl_prompt/issues">Request Feature</a>
   </p>
 </div>
-
-<!-- TABLE OF CONTENTS -->
 
 <details>
   <summary>Table of Contents</summary>
   <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
+    <li><a href="#about-the-project">About The Project</a></li>
+    <li><a href="#getting-started">Getting Started</a></li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
-
-<!-- ABOUT THE PROJECT -->
 
 ## About The Project
 
 This project provides a **ComfyUI custom node** that connects to **Ollama** and lets the user choose *any* local vision-language (VL) model to generate or refine prompts based on:
 
-* An input image (for image edit / image-to-image workflows)
-* An optional base text prompt
+* Up to 3 input images (supporting individual batch processing or combined context).
+* Configurable presets via an external JSON file.
+* An optional user hint or base text prompt.
 
-The node is designed to be **model-agnostic**: it does not try to guess which models are VL-capable. If the model is installed in Ollama, the user can select it.
+The node is **model-agnostic**: if the model is installed in Ollama, you can select it.
 
-Key goals:
-
-* Seamless prompt generation for image edit pipelines
-* Preset-based instruction templates (e.g. SDXL edit, inpaint, style transfer)
-* Automatic detection of installed Ollama models
-* Zero cloud dependency — everything runs locally
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-### Built With
-
-* [Python](https://www.python.org/)
-* [ComfyUI](https://github.com/comfyanonymous/ComfyUI)
-* [Ollama](https://ollama.com/)
-* Vision-Language Models (user-provided via Ollama)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- GETTING STARTED -->
+### Key Features
+* **Editable Presets**: Customize system prompts easily via `presets.json`.
+* **Multi-Image Support**: Process images separately or as a single combined context.
+* **Local Execution**: Zero cloud dependency — everything runs on your machine.
 
 ## Getting Started
 
 ### Prerequisites
+* **ComfyUI** installed.
+* [cite_start]**Ollama** running locally.
+* [cite_start]A **VL-capable model** (e.g., `llava`, `moondream`, `qwen2-vl`).
 
-Make sure you have the following installed:
-
-* **ComfyUI** (working installation)
-* **Ollama** running locally
-* At least one **VL-capable model** pulled in Ollama (for example: llava, bakllava, qwen-vl, etc.)
-
-You can verify Ollama is running with:
-
-```sh
-ollama list
-```
+Verify Ollama status:
+`ollama list`
 
 ### Installation
 
-1. Clone this repository into your ComfyUI custom nodes folder:
+1. Clone inside `custom_nodes`:
+   `git clone https://github.com/JuanBerta/comfyui_ollama_vl_prompt.git`
 
-   ```sh
-   cd ComfyUI/custom_nodes
-   git clone https://github.com/JuanBerta/comfyui_ollama_vl_prompt.git
-   ```
+2. Install dependencies:
+   `pip install -r requirements.txt`
 
-2. Install requirements
-
-   ```sh
-   cd comfyui_ollama_vl_prompt
-   pip install -r requirements.txt
-   ```
-
-3. Restart ComfyUI
-
-4. Ensure Ollama is running before executing a workflow
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- USAGE EXAMPLES -->
+3. Restart ComfyUI.
 
 ## Usage
 
-1. Add the **Ollama VL → Prompt** node to your workflow
-2. Connect:
-
-   * An **IMAGE** input
-   * A **STRING** base prompt (optional)
-3. Select:
-
-   * Ollama model (auto-detected from local installation)
-   * Preset (e.g. SDXL Edit, Inpaint Description, Style Transfer)
-4. Use the generated text output as:
-
-   * Positive prompt
-   * Edit instruction
-   * Conditioning input for downstream nodes
-
-### Example Presets
-
-* **SDXL Image Edit** – Generates a concise edit instruction
-* **Style Expansion** – Extracts visual style and converts it into tags
-* **Detail Booster** – Adds missing visual details from the image
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- ROADMAP -->
+1. Add the **Ollama VL -> Prompt** node.
+2. **Inputs**:
+   * `image1` (Required), `image2`, `image3`: Input image tensors.
+   * `preset`: Choose a template from `presets.json`.
+   * `combine_all_images`: `True` for combined context, `False` for individual prompts.
+   * `user_hint`: Additional text instructions.
+3. **Settings**:
+   * `model`: Select your auto-detected Ollama model.
+   * `keep_alive`: Model VRAM duration in minutes.
 
 ## Roadmap
-
-* [x] Ollama model auto-detection
-* [x] Image + text prompt support
-* [x] Preset-based system prompts
-* [ ] Custom user-defined presets via JSON
-* [ ] Streaming token output
-* [x] Multi-image input support
-* [ ] Advanced error handling & model validation
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- CONTRIBUTING -->
-
-## Contributing
-
-Contributions are welcome and appreciated.
-
-1. Fork the project
-2. Create your feature branch (`git checkout -b feature/MyFeature`)
-3. Commit your changes
-4. Push to your fork
-5. Open a Pull Request
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- LICENSE -->
+* [x] Ollama model auto-detection.
+* [x] Multi-image input support.
+* [x] Custom presets via JSON.
+* [ ] Streaming token output.
 
 ## License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- CONTACT -->
+Distributed under the MIT License.
 
 ## Contact
-
-Juan – GitHub: [https://github.com/JuanBerta](https://github.com/JuanBerta)
-
-Project Link: [https://github.com/JuanBerta/comfyui_ollama_vl_prompt](https://github.com/JuanBerta/comfyui_ollama_vl_prompt)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-<!-- ACKNOWLEDGMENTS -->
+Juan - GitHub: [https://github.com/JuanBerta](https://github.com/JuanBerta)
+Project: [https://github.com/JuanBerta/comfyui_ollama_vl_prompt](https://github.com/JuanBerta/comfyui_ollama_vl_prompt)
 
 ## Acknowledgments
-
-* ComfyUI community
-* Ollama team
-* Open-source VL model authors
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+* ComfyUI community.
+* Ollama team.
