@@ -44,8 +44,8 @@ The node is **model-agnostic**: if the model is installed in Ollama, you can sel
 
 ### Prerequisites
 * **ComfyUI** installed.
-* [cite_start]**Ollama** running locally.
-* [cite_start]A **VL-capable model** (e.g., `llava`, `moondream`, `qwen2-vl`).
+* **Ollama** running locally.
+* A **VL-capable model** (e.g., `llava`, `moondream`, `qwen2-vl`).
 
 Verify Ollama status:
 `ollama list`
