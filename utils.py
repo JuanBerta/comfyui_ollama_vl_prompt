@@ -7,38 +7,26 @@ from io import BytesIO
 def get_local_models():
     try:
         response = ollama.list()
-
         models = response.get("models", [])
-        models_list = []
-        for model in models:
-            models_list.append(model["model"])
-
-        return sorted(models_list) if models_list else ["No model detected, ensure Ollama is Active"]
-
+        models_list = [model["model"] for model in models]
+        return sorted(models_list) if models_list else ["No model detected"]
     except Exception:
-        # Never crash ComfyUI
-        return ["No model Detected, ensure Ollama is Active"]
+        return ["No model detected"]
 
 def tensor_to_base64_list(image_tensor):
-    """
-    Convierte un tensor de ComfyUI en una lista de imágenes base64 en formato RGB.
-    """
     images_b64 = []
+    if image_tensor is None:
+        return images_b64
 
     for i in range(image_tensor.shape[0]):
-        image = image_tensor[i]
-        image = image.cpu().numpy()
-        # Scale and convert to uint8
+        image = image_tensor[i].cpu().numpy()
         image = (image * 255).clip(0, 255).astype(np.uint8)
 
-        # Forze RGB conversion to avoid errores with alpha channels (RGBA)
-        pil = Image.fromarray(image).convert("RGB") 
-        
+        # Forzar RGB para evitar problemas con canales Alpha
+        pil = Image.fromarray(image).convert("RGB")
         buffer = BytesIO()
         pil.save(buffer, format="PNG")
 
-        images_b64.append(
-            base64.b64encode(buffer.getvalue()).decode("utf-8")
-        )
+        images_b64.append(base64.b64encode(buffer.getvalue()).decode("utf-8"))
 
     return images_b64
