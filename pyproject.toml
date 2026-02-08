@@ -20,7 +20,11 @@ license = {file = "LICENSE"}
 #     "Environment :: GPU :: Apple Metal",    # Apple Metal support
 # ]
 
-dependencies = ["ollama"]
+dependencies = [
+    "numpy>=2.4.2",
+    "ollama",
+    "pillow>=12.1.0",
+]
 
 [project.urls]
 Repository = "https://github.com/JuanBerta/comfyui_ollama_vl_prompt"
